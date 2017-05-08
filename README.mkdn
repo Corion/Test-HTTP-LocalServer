@@ -10,9 +10,18 @@ Test::HTTP::LocalServer - spawn a local HTTP server for testing
     use LWP::Simple qw(get);
     my $server = Test::HTTP::LocalServer->spawn;
 
-    ok get $server->url, "Retrieve " . $server->url;
+    get $server->url, "Retrieve " . $server->url;
 
     $server->stop;
+
+# DESCRIPTION
+
+This module implements a tiny web server suitable for running "live" tests
+of HTTP clients against it. It also takes care of cleaning `%ENV` from settings
+that influence the use of a local proxy etc.
+
+Use this web server if you write an HTTP client and want to exercise its
+behaviour in your test suite without talking to the outside world.
 
 # METHODS
 
@@ -105,7 +114,7 @@ This URL will send nothing and close the connection after `$seconds` seconds.
 
 ## Error in response content `$server->error_after_headers`
 
-This URL will send headers for a successfull response but will close the
+This URL will send headers for a successful response but will close the
 socket with an error after 2 blocks of 16 spaces have been sent.
 
 ## Chunked response `$server->chunked`
