@@ -1,0 +1,39 @@
+Test::HTTP::LocalServer - spawn a local HTTP server for testing
+
+
+
+INSTALLATION
+
+This is a Perl module distribution. It should be installed with whichever
+tool you use to manage your installation of Perl, e.g. any of
+
+  cpanm .
+  cpan  .
+  cpanp -i .
+
+Consult http://www.cpan.org/modules/INSTALL.html for further instruction.
+Should you wish to install this module manually, the procedure is
+
+  perl Makefile.PL
+  make
+  make test
+  make install
+
+
+
+
+
+AUTHOR
+
+Max Maischein, E<lt>corion@cpan.orgE<gt>
+
+Please contact me if you find bugs or otherwise improve the module. More tests
+are also very welcome !
+
+
+COPYRIGHT AND LICENSE
+
+This library is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+Copyright (C) 2003-2017 Max Maischein

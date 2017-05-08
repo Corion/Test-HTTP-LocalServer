@@ -1,0 +1,63 @@
+{
+   "abstract" : "spawn a local HTTP server for testing",
+   "author" : [
+      "Max Maischein <corion@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "ExtUtils::MakeMaker version 7.24, CPAN::Meta::Converter version 2.143240",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Test-HTTP-LocalServer",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "File::Basename" : "0",
+            "File::Copy" : "0",
+            "File::Find" : "0",
+            "File::Path" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "ExtUtils::MakeMaker" : "0"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "CGI" : "0",
+            "Carp" : "0",
+            "Cwd" : "0",
+            "File::Basename" : "0",
+            "File::Spec" : "0",
+            "File::Temp" : "0",
+            "HTTP::Daemon" : "0",
+            "HTTP::Response" : "0",
+            "IO::Socket::INET" : "0",
+            "LWP::Simple" : "0",
+            "URI::URL" : "0",
+            "perl" : "5.006"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/Corion/Test-HTTP-LocalServer.git",
+         "web" : "https://github.com/Corion/Test-HTTP-LocalServer"
+      }
+   },
+   "version" : "0.57",
+   "x_static_install" : 1
+}
