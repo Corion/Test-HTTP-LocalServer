@@ -32,8 +32,8 @@ requires:
   IO::Socket::INET: '0'
   LWP::Simple: '0'
   URI::URL: '0'
-  perl: '5.006'
+  perl: '5.008'
 resources:
   repository: https://github.com/Corion/Test-HTTP-LocalServer.git
-version: '0.57'
+version: '0.58'
 x_static_install: 1

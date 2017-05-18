@@ -1,6 +1,6 @@
 language: perl
 perl:
-  - "5.6.2"       # ancient
+  #- "5.6.2"       # ancient, not supported
   - "5.8.8"       # common, prebuilt version
   - "5.10"
   - "5.12"
@@ -15,7 +15,6 @@ perl:
 matrix:
   allow_failures:
     - perl: blead
-    - perl: 5.6.2
 sudo: false
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
