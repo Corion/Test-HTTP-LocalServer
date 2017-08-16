@@ -290,6 +290,14 @@ socket with an error after 2 blocks of 16 spaces have been sent.
 This URL will return 5 blocks of 16 spaces at a rate of one block per second
 in a chunked response.
 
+=head2 Surprisingly large bzip2 encoded response C<< $server->bzip2 >>
+
+This URL will return a short HTTP response that expands to 16M body.
+
+=head2 Surprisingly large gzip encoded response C<< $server->gzip >>
+
+This URL will return a short HTTP response that expands to 16M body.
+
 =head2 Other URLs
 
 All other URLs will echo back the cookies and query parameters.
@@ -304,6 +312,8 @@ use vars qw(%urls);
     'error_timeout' => 'error/timeout/%s',
     'error_close' => 'error/close/%s',
     'error_after_headers' => 'error/after_headers',
+    'gzip' => 'large/gzip/16M',
+    'bzip2' => 'large/bzip/16M',
     'chunked' => 'chunks',
 );
 for (keys %urls) {
