@@ -120,7 +120,9 @@ sub spawn {
   $file =~ s!::!/!g;
   $file .= '.pm';
   my $server_file = File::Spec->catfile( dirname( $INC{$file} ),'log-server' );
-  my @opts;
+  my ($fh,$url_file) = File::Temp::tempfile;
+  close $fh; # race condition, but oh well
+  my @opts = ("-f", $url_file);
   push @opts, "-e" => delete($args{ eval })
       if $args{ eval };
 
