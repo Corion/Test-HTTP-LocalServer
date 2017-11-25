@@ -222,7 +222,7 @@ document.forms[0].navigator.value = window.navigator.userAgent;
     <input type="checkbox" name="cat" value="cat_foo" %s />
     <input type="checkbox" name="cat" value="cat_bar" %s />
     <input type="checkbox" name="cat" value="cat_baz" %s />
-    <input type="hidden" name="navigator" value="[JS disabled]" %s />
+    <input type="hidden" name="navigator" value="[JS disabled]" />
   </form>
 </p>
 </body>
