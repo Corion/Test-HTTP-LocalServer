@@ -13,7 +13,8 @@ GetOptions(
     'f=s' => \my $url_filename,
 );
 
-my $host = 'localhost';
+#my $host = 'localhost';
+my $host = '127.0.0.1';
 my $d = HTTP::Daemon->new(
     LocalAddr => $host,
 ) or die;
