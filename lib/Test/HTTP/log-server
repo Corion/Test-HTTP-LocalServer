@@ -10,9 +10,11 @@ $|++;
 
 GetOptions(
     'e=s' => \my $expression,
+    'f=s' => \my $url_filename,
 );
 
-my $host = 'localhost';
+#my $host = 'localhost';
+my $host = '127.0.0.1';
 my $d = HTTP::Daemon->new(
     LocalAddr => $host,
 ) or die;
@@ -21,7 +23,17 @@ my $d = HTTP::Daemon->new(
 # for LocalAddr => 'localhost'. This causes the
 # tests to fail of many machines.
 ( my $url = URI->new($d->url) )->host($host);
-print "$url\n";
+{
+    my $fh;
+    if( $url_filename ) {
+        open $fh, '>', $url_filename
+            or die "Couldn't write URL to tempfile '$url_filename': $!";
+    } else {
+        $fh = \*STDOUT;
+    };
+    print {$fh} "$url\n";
+    close $fh unless $url_filename;
+}
 
 my ($filename,$logfile) = @ARGV[0,1];
 if ($filename) {
@@ -259,7 +271,7 @@ document.forms[0].navigator.value = window.navigator.userAgent;
     <input type="checkbox" name="cat" value="cat_foo" %s />
     <input type="checkbox" name="cat" value="cat_bar" %s />
     <input type="checkbox" name="cat" value="cat_baz" %s />
-    <input type="hidden" name="navigator" value="[JS disabled]" %s />
+    <input type="hidden" name="navigator" value="[JS disabled]" />
   </form>
 </p>
 </body>

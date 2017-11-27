@@ -90,6 +90,41 @@ The following entries will be removed from C<%ENV>:
 
 =cut
 
+sub spawn_child_win32 { my ( $self, @cmd ) = @_;
+    system(1, @cmd)
+}
+
+sub spawn_child_posix { my ( $self, @cmd ) = @_;
+    require POSIX;
+    POSIX->import("setsid");
+
+    # daemonize
+    defined(my $pid = fork())   || die "can't fork: $!";
+    if( $pid ) {    # non-zero now means I am the parent
+        $self->log('debug', "Spawned child as $pid");
+        return $pid;
+    };
+    chdir("/")                  || die "can't chdir to /: $!";
+
+    # We are the child, close about everything, then exec
+    (setsid() != -1)            || die "Can't start a new session: $!";
+    open(STDERR, ">&STDOUT")    || die "can't dup stdout: $!";
+    open(STDIN,  "< /dev/null") || die "can't read /dev/null: $!";
+    open(STDOUT, "> /dev/null") || die "can't write to /dev/null: $!";
+    exec @cmd;
+}
+
+sub spawn_child { my ( $self, @cmd ) = @_;
+    my ($pid);
+    if( $^O =~ /mswin/i ) {
+        $pid = $self->spawn_child_win32(@cmd)
+    } else {
+        $pid = $self->spawn_child_posix(@cmd)
+    };
+
+    return $pid
+}
+
 sub spawn {
   my ($class,%args) = @_;
   my $self = { %args };
@@ -110,8 +145,8 @@ sub spawn {
     push @{$self->{delete}},$tempfile;
     $args{file} = $tempfile;
   };
-  my ($fh,$logfile) = File::Temp::tempfile();
-  close $fh;
+  my ($tmpfh,$logfile) = File::Temp::tempfile();
+  close $tmpfh;
   push @{$self->{delete}},$logfile;
   $self->{logfile} = $logfile;
   my $web_page = delete $args{file} || "";
@@ -120,30 +155,22 @@ sub spawn {
   $file =~ s!::!/!g;
   $file .= '.pm';
   my $server_file = File::Spec->catfile( dirname( $INC{$file} ),'log-server' );
-  my @opts;
+  my ($fh,$url_file) = File::Temp::tempfile;
+  close $fh; # race condition, but oh well
+  my @opts = ("-f", $url_file);
   push @opts, "-e" => delete($args{ eval })
       if $args{ eval };
 
-  my @cmd=( "-|", $^X, $server_file, $web_page, $logfile, @opts );
-  if( $^O =~ /mswin/i ) {
-    # Windows Perl doesn't support pipe-open with list
-    shift @cmd; # remove pipe-open
-    @cmd= join " ", map {qq{"$_"}} @cmd;
-  };
+  my @cmd=( $^X, $server_file, $web_page, $logfile, @opts );
+  my $pid = $self->spawn_child(@cmd);
+  sleep 1; # overkill, but good enough for the moment
 
-  my ($pid,$server);
-  if( @cmd > 1 ) {
-    # We can do a proper pipe-open
-    my $mode = shift @cmd;
-    $pid = open $server, $mode, @cmd
-      or croak "Couldn't spawn local server $server_file : $!";
-  } else {
-            # We can't do a proper pipe-open, so do the single-arg open
-            # in the hope that everything has been set up properly
-    $pid = open $server, "$cmd[0] |"
-      or croak "Couldn't spawn local server $server_file : $!";
-  };
+  open my $server, '<', $url_file
+      or die "Couldn't read back URL from '$url_file': $!";
+
   my $url = <$server>;
+  close $server;
+  unlink $url_file;
   chomp $url;
   die "Couldn't read back local server url"
       unless $url;
@@ -190,7 +217,10 @@ url.
 sub stop {
   get( $_[0]->{_server_url} . "quit_server" );
   close $_[0]->{_fh};
-  undef $_[0]->{_server_url}
+  undef $_[0]->{_server_url};
+  while(CORE::kill( 0 => $_[0]->{ _pid } )) {
+    sleep 1; # to give the child a chance to go away
+  };
 };
 
 =head2 C<< $server->kill >>
