@@ -215,8 +215,12 @@ url.
 sub stop {
   get( $_[0]->{_server_url} . "quit_server" );
   undef $_[0]->{_server_url};
-  while(CORE::kill( 0 => $_[0]->{ _pid } )) {
+  my $retries = 10;
+  while(--$retries and CORE::kill( 0 => $_[0]->{ _pid } )) {
     sleep 1; # to give the child a chance to go away
+  };
+  if( ! $retries ) {
+      $_[0]->kill;
   };
 };
 
