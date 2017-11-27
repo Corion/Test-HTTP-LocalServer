@@ -101,7 +101,6 @@ sub spawn_child_posix { my ( $self, @cmd ) = @_;
     # daemonize
     defined(my $pid = fork())   || die "can't fork: $!";
     if( $pid ) {    # non-zero now means I am the parent
-        $self->log('debug', "Spawned child as $pid");
         return $pid;
     };
     chdir("/")                  || die "can't chdir to /: $!";
