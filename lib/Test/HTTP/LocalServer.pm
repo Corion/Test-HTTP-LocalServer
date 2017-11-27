@@ -292,6 +292,11 @@ sub local {
 
 =head1 URLs implemented by the server
 
+=head2 download C<< $server->download($name) >>
+
+This URL will send a file with a C<Content-Disposition> header and indicate
+the suggested filename as passed in.
+
 =head2 302 redirect C<< $server->redirect($target) >>
 
 This URL will issue a redirect to C<$target>. No special care is taken
@@ -345,6 +350,7 @@ use vars qw(%urls);
     'gzip' => 'large/gzip/16M',
     'bzip2' => 'large/bzip/16M',
     'chunked' => 'chunks',
+    'download' => 'download/%s',
 );
 for (keys %urls) {
     no strict 'refs';
