@@ -174,7 +174,6 @@ sub spawn {
   die "Couldn't read back local server url"
       unless $url;
 
-  $self->{_fh} = $server;
   $self->{_pid} = $pid;
   $self->{_server_url} = URI::URL->new($url);
 
@@ -215,7 +214,6 @@ url.
 
 sub stop {
   get( $_[0]->{_server_url} . "quit_server" );
-  close $_[0]->{_fh};
   undef $_[0]->{_server_url};
   while(CORE::kill( 0 => $_[0]->{ _pid } )) {
     sleep 1; # to give the child a chance to go away
@@ -232,8 +230,6 @@ cannot be retrieved then.
 sub kill {
   CORE::kill( 'SIGKILL' => $_[0]->{ _pid } );
   #print wait;
-  my $fh = delete $_[0]->{_fh};
-  close $fh;
   undef $_[0]->{_server_url};
   undef $_[0]->{_pid};
 };
