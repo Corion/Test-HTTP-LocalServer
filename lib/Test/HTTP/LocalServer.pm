@@ -19,7 +19,7 @@ use Cwd;
 use File::Basename;
 
 use vars qw($VERSION);
-$VERSION = '0.59';
+$VERSION = '0.60';
 
 =head1 NAME
 

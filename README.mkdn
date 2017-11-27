@@ -94,6 +94,11 @@ program.
 
 # URLs implemented by the server
 
+## download `$server->download($name)`
+
+This URL will send a file with a `Content-Disposition` header and indicate
+the suggested filename as passed in.
+
 ## 302 redirect `$server->redirect($target)`
 
 This URL will issue a redirect to `$target`. No special care is taken
