@@ -234,7 +234,7 @@ cannot be retrieved then.
 =cut
 
 sub kill {
-  CORE::kill( 'SIGKILL' => $_[0]->{ _pid } );
+  CORE::kill( 'KILL' => $_[0]->{ _pid } );
   #print wait;
   undef $_[0]->{_server_url};
   undef $_[0]->{_pid};
