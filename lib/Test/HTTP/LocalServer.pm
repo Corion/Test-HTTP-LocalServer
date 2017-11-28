@@ -107,9 +107,9 @@ sub spawn_child_posix { my ( $self, @cmd ) = @_;
 
     # We are the child, close about everything, then exec
     (setsid() != -1)            || die "Can't start a new session: $!";
-    open(STDERR, ">&STDOUT")    || die "can't dup stdout: $!";
-    open(STDIN,  "< /dev/null") || die "can't read /dev/null: $!";
-    open(STDOUT, "> /dev/null") || die "can't write to /dev/null: $!";
+    #open(STDERR, ">&STDOUT")    || die "can't dup stdout: $!";
+    #open(STDIN,  "< /dev/null") || die "can't read /dev/null: $!";
+    #open(STDOUT, "> /dev/null") || die "can't write to /dev/null: $!";
     exec @cmd;
 }
 
@@ -213,15 +213,17 @@ url.
 =cut
 
 sub stop {
-  get( $_[0]->{_server_url} . "quit_server" );
-  undef $_[0]->{_server_url};
-  my $retries = 10;
-  while(--$retries and CORE::kill( 0 => $_[0]->{ _pid } )) {
-    sleep 1; # to give the child a chance to go away
-  };
-  if( ! $retries ) {
-      $_[0]->kill;
-  };
+    warn "Retrieving stop-URL";
+    get( $_[0]->{_server_url} . "quit_server" );
+    undef $_[0]->{_server_url};
+    my $retries = 10;
+    while(--$retries and CORE::kill( 0 => $_[0]->{ _pid } )) {
+        warn "Waiting";
+        sleep 1; # to give the child a chance to go away
+    };
+    if( ! $retries ) {
+        $_[0]->kill;
+    };
 };
 
 =head2 C<< $server->kill >>
