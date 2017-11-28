@@ -101,8 +101,10 @@ sub spawn_child_posix { my ( $self, @cmd ) = @_;
     # daemonize
     defined(my $pid = fork())   || die "can't fork: $!";
     if( $pid ) {    # non-zero now means I am the parent
+        warn "Launched child as $pid";
         return $pid;
     };
+    warn "I am pid $$";
     chdir("/")                  || die "can't chdir to /: $!";
 
     # We are the child, close about everything, then exec
@@ -218,7 +220,7 @@ sub stop {
     undef $_[0]->{_server_url};
     my $retries = 10;
     while(--$retries and CORE::kill( 0 => $_[0]->{ _pid } )) {
-        warn "Waiting";
+        warn "Waiting for '$_[0]->{ _pid }'";
         sleep 1; # to give the child a chance to go away
     };
     if( ! $retries ) {
@@ -234,7 +236,8 @@ cannot be retrieved then.
 =cut
 
 sub kill {
-  CORE::kill( 'KILL' => $_[0]->{ _pid } );
+  CORE::kill( 'KILL' => $_[0]->{ _pid } )
+      or warn "Couldn't kill pid '$_[0]->{ _pid }'";
   #print wait;
   undef $_[0]->{_server_url};
   undef $_[0]->{_pid};
