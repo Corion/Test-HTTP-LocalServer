@@ -213,17 +213,17 @@ url.
 =cut
 
 sub stop {
-    warn "Retrieving stop-URL";
     get( $_[0]->{_server_url} . "quit_server" );
     undef $_[0]->{_server_url};
-    my $retries = 10;
-    while(--$retries and CORE::kill( 0 => $_[0]->{ _pid } )) {
-        warn "Waiting for '$_[0]->{ _pid }'";
-        sleep 1; # to give the child a chance to go away
-    };
-    if( ! $retries ) {
-        $_[0]->kill;
-    };
+    wait;
+    #my $retries = 10;
+    #while(--$retries and CORE::kill( 0 => $_[0]->{ _pid } )) {
+        #warn "Waiting for '$_[0]->{ _pid }'";
+        #sleep 1; # to give the child a chance to go away
+    #};
+    #if( ! $retries ) {
+        #$_[0]->kill;
+    #};
 };
 
 =head2 C<< $server->kill >>
@@ -236,7 +236,7 @@ cannot be retrieved then.
 sub kill {
   CORE::kill( 'KILL' => $_[0]->{ _pid } )
       or warn "Couldn't kill pid '$_[0]->{ _pid }'";
-  #print wait;
+  wait;
   undef $_[0]->{_server_url};
   undef $_[0]->{_pid};
 };

@@ -223,7 +223,7 @@ SERVERLOOP: {
   };
   undef $d;
 };
-END { debug "Server stopped" };
+END { debug "Server $$ stopped" };
 
 # The below <link> tag should stop the browser from requesting a favicon.ico, but we still see it...
 __DATA__
