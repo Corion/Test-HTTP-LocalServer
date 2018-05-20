@@ -1,4 +1,4 @@
-0.62 2018xxxx
+0.62 20180520
     + Fix the ->redirect URL to honor the specified host
       This prevents breakage due to localhost vs. 127.0.0.1 mixups
     + Add ->content method to serve arbitrary content like Javascript
