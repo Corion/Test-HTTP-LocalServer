@@ -1,3 +1,6 @@
+0.62 2018xxxx
+    + Fix the ->redirect URL to honor the specified host
+      This prevents breakage due to localhost vs. 127.0.0.1 mixups
 0.61 20171129
     + Make the "->download" method actually work in the sense that it will send
 	  downloads with a name other than "$1".
