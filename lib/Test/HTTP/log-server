@@ -167,6 +167,18 @@ SERVERLOOP: {
                 ;
             $res = HTTP::Response->new(200, "OK", $headers, $body);
 
+        } elsif ($location =~ m!^/content/(.*)$!) {
+            my $headers = HTTP::Headers->new(
+                Content_Type => "text/html",
+            );
+		    (my $html = $1) =~ s!%([a-fA-F0-9]{2})!chr(hex($1))!ge;
+            $body = join "",
+                "<html>",
+                "$html",
+                "</html>",
+                ;
+            $res = HTTP::Response->new(200, "OK", $headers, $body);
+
         } else {
             my $q = $r->content
                     ? CGI->new($r->content )
