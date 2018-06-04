@@ -41,7 +41,9 @@
             "File::Basename" : "0",
             "File::Spec" : "0",
             "File::Temp" : "0",
+            "Getopt::Long" : "0",
             "HTTP::Daemon" : "0",
+            "HTTP::Request::AsCGI" : "0",
             "HTTP::Response" : "0",
             "IO::Socket::INET" : "0",
             "LWP::Simple" : "0",
@@ -58,7 +60,7 @@
          "web" : "https://github.com/Corion/Test-HTTP-LocalServer"
       }
    },
-   "version" : "0.62",
+   "version" : "0.63",
    "x_serialization_backend" : "JSON::PP version 2.94",
    "x_static_install" : 1
 }
