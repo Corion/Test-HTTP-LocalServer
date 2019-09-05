@@ -7,8 +7,20 @@ use warnings;
 use strict;
 use File::Find;
 use Test::More tests => 4;
-use Parse::CPAN::Meta;
-use CPAN::Meta::Validator;
+
+eval {
+  #require Test::MinimumVersion::Fast;
+  require Parse::CPAN::Meta;
+  Parse::CPAN::Meta->import();
+  require CPAN::Meta::Validator;
+  CPAN::Meta::Validator->import(2.15);
+};
+if ($@) {
+  plan skip_all => "CPAN::Meta::Validator version 2.15 required for testing META files";
+}
+else {
+  all_minimum_version_from_metajson_ok();
+}
 
 use lib '.';
 use vars '%module';
