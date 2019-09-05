@@ -51,7 +51,12 @@ The following entries will be removed from `%ENV`:
 
     HTTP_PROXY
     http_proxy
+    HTTPS_PROXY
+    https_proxy
     CGI_HTTP_PROXY
+
+Note that [LWP::Simple](https://metacpan.org/pod/LWP::Simple) must be loaded after this module, as it caches
+the entries in `%ENV` otherwise.
 
 ## `$server->port`
 
