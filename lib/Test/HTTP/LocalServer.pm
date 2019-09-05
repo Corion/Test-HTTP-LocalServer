@@ -85,7 +85,12 @@ The following entries will be removed from C<%ENV>:
 
     HTTP_PROXY
     http_proxy
+    HTTPS_PROXY
+    https_proxy
     CGI_HTTP_PROXY
+
+Note that L<LWP::Simple> must be loaded after this module, as it caches
+the entries in C<%ENV> otherwise.
 
 =cut
 
