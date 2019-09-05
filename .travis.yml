@@ -1,7 +1,9 @@
 language: perl
 perl:
-  #- "5.6.2"       # ancient, not supported
-  - "5.8.8"       # common, prebuilt version
+  # - "5.6" # does not work on Travis anymore?!
+  - "5.8.4"
+  - "5.8.4-thr"
+  - "5.8"         # common, prebuilt version
   - "5.10"
   - "5.12"
   - "5.14"
@@ -12,29 +14,32 @@ perl:
   - "5.22"
   - "5.24"
   - "5.26"
+  - "5.28"
   - "blead"
 
 matrix:
   allow_failures:
     - perl: blead
+    - perl: 5.6.2
+
 sudo: false
+
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
-  - export SPLIT_BUILD=0
   - source ~/travis-perl-helpers/init
   - build-perl
   - perl -V
   - build-dist
   - cd $BUILD_DIR
-install:
   - cpan-install ExtUtils::MakeMaker~6.68
-  # for building on 5.6.2
   - cpan-install CPAN::Meta
   - cpan-install --deps
+
 script:
   - cd $BUILD_DIR
   - perl Makefile.PL && make
   - prove -blv $(test-dirs)
+
 branches:
   except:
     - /^wip\//

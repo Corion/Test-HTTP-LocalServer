@@ -19,7 +19,7 @@ if ($@) {
   plan skip_all => "CPAN::Meta::Validator version 2.15 required for testing META files";
 }
 else {
-  plan 4;
+  plan tests => 4;
 }
 
 use lib '.';
