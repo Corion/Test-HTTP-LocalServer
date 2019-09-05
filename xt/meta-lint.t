@@ -6,7 +6,7 @@
 use warnings;
 use strict;
 use File::Find;
-use Test::More tests => 4;
+use Test::More;
 
 eval {
   #require Test::MinimumVersion::Fast;
@@ -19,7 +19,7 @@ if ($@) {
   plan skip_all => "CPAN::Meta::Validator version 2.15 required for testing META files";
 }
 else {
-  all_minimum_version_from_metajson_ok();
+  plan 4;
 }
 
 use lib '.';
