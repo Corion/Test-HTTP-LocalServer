@@ -34,6 +34,7 @@ requires:
   HTTP::Request::AsCGI: '0'
   HTTP::Response: '0'
   IO::Socket::INET: '0'
+  LWP: '6.36'
   LWP::Simple: '0'
   Socket: '0'
   URI: '0'
