@@ -62,14 +62,15 @@ my %module = (
                         'IO::Socket::INET' => 0, # For port probing
                         'CGI' => 0,
                         'HTTP::Request::AsCGI' => 0,
-                        'LWP::Simple' => 0, # just for testing
-                        'LWP' => '6.36', # somewhere before that, there is a test failure otherwise
                         'Socket' => 0, # for detecting 127.0.0.1 vs [::1]
                         'URI'      => 0,
                         'URI::URL' => 0,
     },
     TEST_REQUIRES => {
         'Test::More'   => 0,
+        'LWP::Simple'  => 0,
+        'LWP'          => '6.36', # somewhere before that, there is a test failure otherwise
+        'HTTP::Request::Common' => 0,
     },
 
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
