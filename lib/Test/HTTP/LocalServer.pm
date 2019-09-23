@@ -400,7 +400,7 @@ None by default.
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
 
-Copyright (C) 2003-2017 Max Maischein
+Copyright (C) 2003-2019 Max Maischein
 
 =head1 AUTHOR
 
