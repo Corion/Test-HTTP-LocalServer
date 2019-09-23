@@ -34,9 +34,7 @@ if( $d->sockdomain == Socket::AF_INET ) {
     } else {
         $fh = \*STDOUT;
     };
-    local $/;
     print {$fh} "$url\n";
-    flush $fh;
     close $fh unless $url_filename;
 }
 

@@ -167,12 +167,16 @@ sub spawn {
 
   my @cmd=( $^X, $server_file, $web_page, $logfile, @opts );
   my $pid = $self->spawn_child(@cmd);
-  my $timeout = time +1;
-  while( -s $url_file <= 15 and time < $timeout ) {
+  my $timeout = time +2;
+  while( time < $timeout and (-s $url_file <= 15)) {
       sleep( 0.1 ); # overkill, but good enough for the moment
   }
 
-  open my $server, '<', $url_file
+  my $server;
+  while( time < $timeout and !open $server, '<', $url_file ) {
+      sleep(0.1);
+  };
+  $server
       or die "Couldn't read back URL from '$url_file': $!";
 
   my $url = <$server>;
