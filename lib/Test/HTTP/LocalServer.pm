@@ -17,6 +17,7 @@ use URI::URL qw();
 use Carp qw(carp croak);
 use Cwd;
 use File::Basename;
+use Time::HiRes;
 
 our $VERSION = '0.66';
 
@@ -166,7 +167,10 @@ sub spawn {
 
   my @cmd=( $^X, $server_file, $web_page, $logfile, @opts );
   my $pid = $self->spawn_child(@cmd);
-  sleep 1; # overkill, but good enough for the moment
+  my $timeout = time +1;
+  while( -s $url_file <= 15 and time < $timeout ) {
+      sleep( 0.1 ); # overkill, but good enough for the moment
+  }
 
   open my $server, '<', $url_file
       or die "Couldn't read back URL from '$url_file': $!";
@@ -201,6 +205,7 @@ sub port {
 
 This returns the url where you can contact the server. This url
 is valid until the C<$server> goes out of scope or you call
+
   $server->stop;
 
 =cut

@@ -66,6 +66,7 @@ my %module = (
                         'URI'      => 0,
                         'URI::URL' => 0,
                         'LWP::Simple' => 0,
+                        'Time::HiRes' => 0,
     },
     TEST_REQUIRES => {
         'Test::More'      => 0,
