@@ -18,7 +18,7 @@ is $res, 1, "PID $pid is an existing process";
 
 my $ua = LWP::UserAgent->new();
 
-my $res = $ua->request( GET $server->url );
+$res = $ua->request( GET $server->url );
 ok $res->is_success, "Retrieve " . $server->url;
 
 $res = $ua->request( POST $server->url, [query => 'test1'] );
