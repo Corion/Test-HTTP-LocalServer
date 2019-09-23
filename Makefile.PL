@@ -68,9 +68,10 @@ my %module = (
                         'LWP::Simple' => 0,
     },
     TEST_REQUIRES => {
-        'Test::More'   => 0,
-        'LWP::Simple'  => 0,
-        'LWP'          => '6.36', # somewhere before that, there is a test failure otherwise
+        'Test::More'      => 0,
+        'LWP::Simple'     => 0,
+        'LWP::UserAgent'  => 0,
+        'LWP'             => '6.36', # somewhere before that, there is a test failure otherwise
         'HTTP::Request::Common' => 0,
     },
 

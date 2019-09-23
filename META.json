@@ -59,6 +59,7 @@
             "HTTP::Request::Common" : "0",
             "LWP" : "6.36",
             "LWP::Simple" : "0",
+            "LWP::UserAgent" : "0",
             "Test::More" : "0"
          }
       }
