@@ -69,7 +69,8 @@ if you need to compare results from two runs.
 
 This returns the url where you can contact the server. This url
 is valid until the `$server` goes out of scope or you call
-  $server->stop;
+
+    $server->stop;
 
 ## `$server->stop`
 
