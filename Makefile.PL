@@ -65,6 +65,7 @@ my %module = (
                         'Socket' => 0, # for detecting 127.0.0.1 vs [::1]
                         'URI'      => 0,
                         'URI::URL' => 0,
+                        'LWP::Simple' => 0,
     },
     TEST_REQUIRES => {
         'Test::More'   => 0,
