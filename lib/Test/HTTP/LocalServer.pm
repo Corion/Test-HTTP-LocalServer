@@ -248,7 +248,7 @@ cannot be retrieved then.
 
 sub kill {
   CORE::kill( 'KILL' => $_[0]->{ _pid } )
-      or warn "Couldn't kill pid '$_[0]->{ _pid }'";
+      or warn "Couldn't kill pid '$_[0]->{ _pid }': $!";
   wait;
   undef $_[0]->{_server_url};
   undef $_[0]->{_pid};
