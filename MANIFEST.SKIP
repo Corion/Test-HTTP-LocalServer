@@ -1,6 +1,8 @@
+^\.appveyor.yml$
 .cvsignore$
 .git/
 ^.lwpcookies
+^.prove
 ^.releaserc
 ^.travis.yml
 ^blib/
