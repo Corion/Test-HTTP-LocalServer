@@ -201,21 +201,38 @@ if you need to compare results from two runs.
 =cut
 
 sub port {
-  carp __PACKAGE__ . "::port called without a server" unless $_[0]->{_server_url};
-  $_[0]->{_server_url}->port
+  carp __PACKAGE__ . "::port called without a server" unless $_[0]->server_url;
+  $_[0]->server_url->port
 };
 
 =head2 C<< $server->url >>
 
-This returns the url where you can contact the server. This url
+This returns the L<URI> where you can contact the server. This url
 is valid until the C<$server> goes out of scope or you call
 
   $server->stop;
 
+The returned object is a copy that you can modify at your leisure.
+
 =cut
 
 sub url {
-  $_[0]->{_server_url}->abs
+  $_[0]->server_url->abs
+};
+
+=head2 C<< $server->server_url >>
+
+This returns the L<URI> object of the server URL. Use L</$server->url> instead.
+Use this object if you want to modify the hostname or other properties of the
+server object.
+
+Consider this basically an emergency accessor. In about every case,
+using C<< ->url() >> does what you want.
+
+=cut
+
+sub server_url {
+  $_[0]->{_server_url}
 };
 
 =head2 C<< $server->stop >>
@@ -226,7 +243,7 @@ url.
 =cut
 
 sub stop {
-    get( $_[0]->{_server_url} . "quit_server" );
+    get( $_[0]->server_url() . "quit_server" );
     undef $_[0]->{_server_url};
     wait;
     #my $retries = 10;
@@ -265,11 +282,11 @@ as a string.
 
 sub get_log {
   my ($self) = @_;
-  return get( $self->{_server_url} . "get_server_log" );
+  return get( $self->server_url() . "get_server_log" );
 };
 
 sub DESTROY {
-  $_[0]->stop if $_[0]->{_server_url};
+  $_[0]->stop if $_[0]->server_url;
   for my $file (@{$_[0]->{delete}}) {
     unlink $file or warn "Couldn't remove tempfile $file : $!\n";
   };

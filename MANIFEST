@@ -17,6 +17,7 @@ t/00-load.t
 t/01-start.t
 t/02-start-stop.t
 t/03-sticky-fields.t
+t/04-server-name.t
 xt/99-changes.t
 xt/99-compile.t
 xt/99-examples.t
