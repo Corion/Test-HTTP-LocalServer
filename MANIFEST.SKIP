@@ -21,3 +21,4 @@ CVS/
 ^ppd/
 t/70-real-status-timeout.t
 ^MYMETA.*
+^.*\.log$
