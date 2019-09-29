@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 use Test::HTTP::LocalServer;
-use LWP::Simple qw(get);
 
 use Test::More tests => 3;
 

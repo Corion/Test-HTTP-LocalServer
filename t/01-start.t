@@ -2,9 +2,14 @@
 use strict;
 use warnings;
 use Test::HTTP::LocalServer;
-use LWP::Simple qw(get);
+use HTTP::Tiny;
 
 use Test::More tests => 4;
+
+sub get {
+    my( $url ) = @_;
+    HTTP::Tiny->new->get( $url )->{content};
+}
 
 my $server = Test::HTTP::LocalServer->spawn(
 #    debug => 1

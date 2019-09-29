@@ -2,9 +2,8 @@
 use strict;
 use warnings;
 use Test::HTTP::LocalServer;
-use HTTP::Request::Common;
-use LWP::UserAgent;
 use Time::HiRes;
+use HTTP::Tiny;
 
 use Test::More tests => 6;
 
@@ -16,14 +15,14 @@ my $pid = $server->{_pid};
 my $res = kill 0, $pid;
 is $res, 1, "PID $pid is an existing process";
 
-my $ua = LWP::UserAgent->new();
+my $ua = HTTP::Tiny->new();
 
-$res = $ua->request( GET $server->url );
-ok $res->is_success, "Retrieve " . $server->url;
+$res = $ua->get( $server->url );
+ok $res->{success}, "Retrieve " . $server->url;
 
-$res = $ua->request( POST $server->url, [query => 'test1'] );
-ok $res->is_success, "POST to " . $server->url;
-like $res->decoded_content, qr/\bname="query"\s+value="test1"/, "We have sticky form fields";
+$res = $ua->post_form( $server->url, [query => 'test1'] );
+ok $res->{success}, "POST to " . $server->url;
+like $res->{content}, qr/\bname="query"\s+value="test1"/, "We have sticky form fields";
 
 my @log = $server->get_log;
 

@@ -1,15 +1,6 @@
 package Test::HTTP::LocalServer;
 use strict;
-# this has to happen here because LWP::Simple creates a $ua
-# on load so any time after this is too late.
-BEGIN {
-  delete @ENV{qw(
-    HTTP_PROXY http_proxy CGI_HTTP_PROXY
-    HTTPS_PROXY https_proxy HTTP_PROXY_ALL http_proxy_all
-  )};
-}
 use 5.008; # We use "fancy" opening of lexical filehandle, see below
-use LWP::Simple;
 use FindBin;
 use File::Spec;
 use File::Temp;
@@ -18,6 +9,7 @@ use Carp qw(carp croak);
 use Cwd;
 use File::Basename;
 use Time::HiRes qw ( time sleep );
+use HTTP::Tiny;
 
 our $VERSION = '0.66';
 
@@ -27,10 +19,11 @@ Test::HTTP::LocalServer - spawn a local HTTP server for testing
 
 =head1 SYNOPSIS
 
-  use LWP::Simple qw(get);
+  use HTTP::Tiny;
   my $server = Test::HTTP::LocalServer->spawn;
 
-  get $server->url, "Retrieve " . $server->url;
+  my $res = HTTP::Tiny->new->get( $server->url );
+  print $res->{content};
 
   $server->stop;
 
@@ -82,18 +75,32 @@ A good idea for a slow server would be
 
 All served HTML will have the first %s replaced by the current location.
 
-The following entries will be removed from C<%ENV>:
+The following entries will be removed from C<%ENV> when making a request:
 
     HTTP_PROXY
     http_proxy
+    HTTP_PROXY_ALL
+    http_proxy_all
     HTTPS_PROXY
     https_proxy
     CGI_HTTP_PROXY
-
-Note that L<LWP::Simple> must be loaded after this module, as it caches
-the entries in C<%ENV> otherwise.
+    ALL_PROXY
+    all_proxy
 
 =cut
+
+sub get {
+    my( $url ) = @_;
+    local *ENV;
+    delete @ENV{qw(
+      HTTP_PROXY http_proxy CGI_HTTP_PROXY
+      HTTPS_PROXY https_proxy HTTP_PROXY_ALL http_proxy_all
+      ALL_PROXY
+      all_proxy
+    )};
+    my $response = HTTP::Tiny->new->get($url);
+    $response->{content}
+}
 
 sub spawn_child_win32 { my ( $self, @cmd ) = @_;
     system(1, @cmd)

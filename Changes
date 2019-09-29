@@ -4,6 +4,8 @@
     * Added ->server_url() as a half-documented way of changing the URL
       the server is accessed at. This is self-service and if things break, you
       get to keep all the parts.
+    * LWP::UserAgent is no more a (test) prerequisite. We do the tests from
+      HTTP::Tiny (core since 5.14, runs on 5.6+).
 
 0.66 2019-09-10
     * Make detection of IPv4 localhost vs. IPv6 localhost

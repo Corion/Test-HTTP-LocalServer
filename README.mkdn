@@ -8,10 +8,11 @@ Test::HTTP::LocalServer - spawn a local HTTP server for testing
 
 # SYNOPSIS
 
-    use LWP::Simple qw(get);
+    use HTTP::Tiny;
     my $server = Test::HTTP::LocalServer->spawn;
 
-    get $server->url, "Retrieve " . $server->url;
+    my $res = HTTP::Tiny->new->get( $server->url );
+    print $res->{content};
 
     $server->stop;
 
@@ -48,16 +49,17 @@ Valid arguments are :
 
 All served HTML will have the first %s replaced by the current location.
 
-The following entries will be removed from `%ENV`:
+The following entries will be removed from `%ENV` when making a request:
 
     HTTP_PROXY
     http_proxy
+    HTTP_PROXY_ALL
+    http_proxy_all
     HTTPS_PROXY
     https_proxy
     CGI_HTTP_PROXY
-
-Note that [LWP::Simple](https://metacpan.org/pod/LWP::Simple) must be loaded after this module, as it caches
-the entries in `%ENV` otherwise.
+    ALL_PROXY
+    all_proxy
 
 ## `$server->port`
 
