@@ -1,3 +1,6 @@
+0.68 2019-09-30
+    * Add ->basic_auth endpoint
+
 0.67 2019-09-29
     * More aggressively watch for startup of the web server to reduce idle
       times. Also speed up the test suite by polling instead of sleep()ing.

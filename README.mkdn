@@ -134,6 +134,17 @@ This URL will issue a redirect to `$target`. No special care is taken
 towards URL-decoding `$target` as not to complicate the server code.
 You need to be wary about issuing requests with escaped URL parameters.
 
+## 401 basic authentication challenge `$server->basic_auth($user, $pass)`
+
+This URL will issue a 401 basic authentication challenge. The expected user
+and password are encoded in the URL.
+
+    my $challenge_url = $server->basic_auth('foo','secret');
+    my $wrong_pw = URI->new( $challenge_url );
+    $wrong_pw->userinfo('foo:hunter2');
+    $res = HTTP::Tiny->new->get($wrong_pw);
+    is $res->{status}, 401, "We get the challenge with a wrong user/password";
+
 ## 404 error `$server->error_notfound($target)`
 
 This URL will response with status code 404.
