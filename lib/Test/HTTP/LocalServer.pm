@@ -309,7 +309,6 @@ program.
 
 sub local {
     my ($self, $htmlfile) = @_;
-    require Cwd;
     require File::Spec;
     my $fn= File::Spec->file_name_is_absolute( $htmlfile )
           ? $htmlfile
