@@ -67,10 +67,21 @@ if you need to compare results from two runs.
 
 ## `$server->url`
 
-This returns the url where you can contact the server. This url
+This returns the [URI](https://metacpan.org/pod/URI) where you can contact the server. This url
 is valid until the `$server` goes out of scope or you call
 
     $server->stop;
+
+The returned object is a copy that you can modify at your leisure.
+
+## `$server->server_url`
+
+This returns the [URI](https://metacpan.org/pod/URI) object of the server URL. Use ["$server-"](#server)url> instead.
+Use this object if you want to modify the hostname or other properties of the
+server object.
+
+Consider this basically an emergency accessor. In about every case,
+using `->url()` does what you want.
 
 ## `$server->stop`
 
