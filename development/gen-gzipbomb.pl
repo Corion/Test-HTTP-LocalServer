@@ -3,6 +3,12 @@ use strict;
 use warnings;
 use IO::Compress::Gzip qw(gzip $GzipError);
 
+=head1 NAME
+
+gen-gzipbomb.pl - generate a thrice-encoded gzip stream that decodes to 16MB
+
+=cut
+
 # Create a nasty gzip stream:
 my $size = 16 * 1024 * 1024;
 my $stream = "\0" x $size;

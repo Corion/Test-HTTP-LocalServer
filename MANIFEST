@@ -1,8 +1,9 @@
 .gitignore
 Changes
-gen-bzipbomb.pl
-gen-gzipbomb.pl
+development/gen-bzipbomb.pl
+development/gen-gzipbomb.pl
 lib/Test/HTTP/cookie-server
+lib/Test/HTTP/gzip-streamed.psgi
 lib/Test/HTTP/LocalServer.pm
 lib/Test/HTTP/log-server
 LICENSE

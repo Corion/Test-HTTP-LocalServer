@@ -3,6 +3,12 @@ use strict;
 use warnings;
 use IO::Compress::Bzip2 qw(bzip2 $Bzip2Error);
 
+=head1 NAME
+
+gen-bzipbomb.pl - generate a thrice-encoded bzip2 stream that decodes to 16MB
+
+=cut
+
 # Create a nasty bzip2 stream:
 my $size = 16 * 1024 * 1024;
 my $stream = "\0" x $size;
