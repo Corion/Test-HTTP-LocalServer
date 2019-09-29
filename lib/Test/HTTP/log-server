@@ -6,7 +6,7 @@ use CGI;
 use HTTP::Request::AsCGI;
 use Getopt::Long;
 use Socket();
-our $VERSION = '0.63';
+our $VERSION = '0.67';
 
 $|++;
 

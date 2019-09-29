@@ -4,6 +4,8 @@ use strict;
 
 require HTTP::Daemon;
 
+our $VERSION = '0.67';
+
 $|++;
 
 my $d = HTTP::Daemon->new or die;

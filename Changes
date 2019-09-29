@@ -1,4 +1,4 @@
-0.67 to be released
+0.67 2019-09-29
     * More aggressively watch for startup of the web server to reduce idle
       times. Also speed up the test suite by polling instead of sleep()ing.
     * Added ->server_url() as a half-documented way of changing the URL

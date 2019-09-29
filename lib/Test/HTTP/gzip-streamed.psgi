@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use IO::Compress::Gzip qw/$GzipError Z_PARTIAL_FLUSH/;
 
+our $VERSION = '0.67';
+
 my $app = sub {
 	my $env = shift;
 	die "This app needs a server that supports psgi.streaming"
