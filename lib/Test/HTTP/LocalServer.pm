@@ -17,7 +17,7 @@ use URI::URL qw();
 use Carp qw(carp croak);
 use Cwd;
 use File::Basename;
-use Time::HiRes;
+use Time::HiRes qw ( time sleep );
 
 our $VERSION = '0.66';
 
