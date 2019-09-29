@@ -350,6 +350,17 @@ This URL will issue a redirect to C<$target>. No special care is taken
 towards URL-decoding C<$target> as not to complicate the server code.
 You need to be wary about issuing requests with escaped URL parameters.
 
+=head2 401 basic authentication challenge C<< $server->basic_auth($user, $pass) >>
+
+This URL will issue a 401 basic authentication challenge. The expected user
+and password are encoded in the URL.
+
+    my $challenge_url = $server->basic_auth('foo','secret');
+    my $wrong_pw = URI->new( $challenge_url );
+    $wrong_pw->userinfo('foo:hunter2');
+    $res = HTTP::Tiny->new->get($wrong_pw);
+    is $res->{status}, 401, "We get the challenge with a wrong user/password";
+
 =head2 404 error C<< $server->error_notfound($target) >>
 
 This URL will response with status code 404.
@@ -398,6 +409,7 @@ use vars qw(%urls);
     'bzip2' => 'large/bzip/16M',
     'chunked' => 'chunks',
     'download' => 'download/%s',
+    'basic_auth' => 'basic_auth/%s/%s',
 );
 for (keys %urls) {
     no strict 'refs';
