@@ -38,7 +38,7 @@ before_install:
 script:
   - cd $BUILD_DIR
   - perl Makefile.PL && make
-  - prove -blv $(test-dirs)
+  - prove -j $(test-jobs) -blv $(test-dirs)
 
 branches:
   except:
