@@ -18,6 +18,10 @@ perl:
   - "5.30"
   - "blead"
 
+env:
+  - HTTP_PROXY="http://example.com/"
+  - HTTP_PROXY=
+
 matrix:
   allow_failures:
     - perl: blead
