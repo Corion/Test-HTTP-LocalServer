@@ -229,7 +229,7 @@ sub url {
 
 =head2 C<< $server->server_url >>
 
-This returns the L<URI> object of the server URL. Use L</$server->url> instead.
+This returns the L<URI> object of the server URL. Use L</$server-E<gt>url> instead.
 Use this object if you want to modify the hostname or other properties of the
 server object.
 
