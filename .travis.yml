@@ -55,6 +55,7 @@ matrix:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update        ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then perlbrew init; perlbrew install stable; perlbrew use stable; fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl
