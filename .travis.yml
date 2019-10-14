@@ -23,13 +23,35 @@ env:
   - HTTP_PROXY=
 
 matrix:
-  allow_failures:
-    - perl: blead
-    #- perl: 5.6.2
+  #allow_failures:
+  #  - perl: blead
+  #  #- perl: 5.6.2
+  - os: osx
+    compiler: clang
+    osx_image: xcode10.3
+    addons:
+      homebrew:
+        packages:
+          - perl
+          - ccache
+  - os: linux
+    sudo: false
+    dist: xenial
+    compiler: gcc
+    #addons:
+    #  apt:
+    #    packages:
+    #      - bison
 
 sudo: false
 
+cache:
+  ccache: true
+  directories:
+    - $HOME/Library/Caches/Homebrew
+
 before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update        ; fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl
