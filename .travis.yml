@@ -22,26 +22,28 @@ env:
   - HTTP_PROXY="http://example.com/"
   - HTTP_PROXY=
 
+addons:
+  apt:
+  homebrew:
+    packages:
+      - perl
+
+os:
+  - osx
+  - linux
+
+cache:
+  directories:
+    - $HOME/Library/Caches/Homebrew
+
 matrix:
+  include:
+  - os: linux
+    sudo: false
+  - os: osx
   #allow_failures:
   #  - perl: blead
   #  #- perl: 5.6.2
-  - os: osx
-    #compiler: clang
-    #osx_image: xcode10.3
-    addons:
-      homebrew:
-        packages:
-          - perl
-          - ccache
-  - os: linux
-    sudo: false
-    dist: xenial
-    compiler: gcc
-    cache:
-        ccache: true
-        directories:
-            - $HOME/Library/Caches/Homebrew
 
     #addons:
     #  apt:
