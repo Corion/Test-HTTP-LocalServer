@@ -20,6 +20,7 @@ t/02-start-stop.t
 t/03-sticky-fields.t
 t/04-server-name.t
 t/05-basic-auth.t
+t/05-simplest.t
 testrules.yml
 xt/99-changes.t
 xt/99-compile.t
