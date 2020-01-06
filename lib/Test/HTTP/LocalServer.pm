@@ -252,7 +252,8 @@ url.
 sub stop {
     get( $_[0]->server_url() . "quit_server" );
     undef $_[0]->{_server_url};
-    wait;
+    my $pid = delete $_[0]->{_pid};
+    waitpid $pid, 0;
     #my $retries = 10;
     #while(--$retries and CORE::kill( 0 => $_[0]->{ _pid } )) {
         #warn "Waiting for '$_[0]->{ _pid }'";
@@ -271,11 +272,14 @@ cannot be retrieved then.
 =cut
 
 sub kill {
-  CORE::kill( 'KILL' => $_[0]->{ _pid } )
-      or warn "Couldn't kill pid '$_[0]->{ _pid }': $!";
-  wait;
+  my $pid = delete $_[0]->{_pid};
+  if( $pid and CORE::kill( 0 => $pid )) {
+    # The kid is still alive
+    CORE::kill( 'KILL' => $pid )
+        or warn "Couldn't kill pid '$pid': $!";
+    waitpid $pid, 0;
+  };
   undef $_[0]->{_server_url};
-  undef $_[0]->{_pid};
 };
 
 =head2 C<< $server->get_log >>
@@ -435,7 +439,7 @@ None by default.
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
 
-Copyright (C) 2003-2019 Max Maischein
+Copyright (C) 2003-2020 Max Maischein
 
 =head1 AUTHOR
 
