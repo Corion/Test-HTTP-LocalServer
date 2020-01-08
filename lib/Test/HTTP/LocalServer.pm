@@ -103,6 +103,7 @@ sub get {
 }
 
 sub spawn_child_win32 { my ( $self, @cmd ) = @_;
+    local $?;
     system(1, @cmd)
 }
 
@@ -250,6 +251,7 @@ url.
 =cut
 
 sub stop {
+    local $?; # so we don't override the exit code of a child here
     get( $_[0]->server_url() . "quit_server" );
     undef $_[0]->{_server_url};
     my $pid = delete $_[0]->{_pid};
@@ -274,6 +276,8 @@ cannot be retrieved then.
 sub kill {
   my $pid = delete $_[0]->{_pid};
   if( $pid and CORE::kill( 0 => $pid )) {
+    local $?; # so we don't override the exit code of a child here
+
     # The kid is still alive
     CORE::kill( 'KILL' => $pid )
         or warn "Couldn't kill pid '$pid': $!";
