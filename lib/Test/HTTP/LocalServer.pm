@@ -43,8 +43,15 @@ behaviour in your test suite without talking to the outside world.
   my $server = Test::HTTP::LocalServer->spawn;
 
 This spawns a new HTTP server. The server will stay running until
+
   $server->stop
-is called.
+
+is called. Ideally, you explicitly call C<< ->stop >> or use
+
+  undef $server
+
+before the main program ends so that the program exit code reflects the
+real exit code and not the chlid exit code.
 
 Valid arguments are :
 
