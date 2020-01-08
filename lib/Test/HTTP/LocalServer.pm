@@ -11,7 +11,7 @@ use File::Basename;
 use Time::HiRes qw ( time sleep );
 use HTTP::Tiny;
 
-our $VERSION = '0.69';
+our $VERSION = '0.70';
 
 =head1 NAME
 
