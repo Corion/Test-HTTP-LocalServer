@@ -79,7 +79,8 @@ before_install:
 script:
   - cd $BUILD_DIR
   - perl Makefile.PL && make
-  - prove -j $(test-jobs) -blv $(test-dirs)
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then prove -blv xt/ t/ ; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then prove -j $(test-jobs) -blv $(test-dirs) ; fi
 
 branches:
   except:
