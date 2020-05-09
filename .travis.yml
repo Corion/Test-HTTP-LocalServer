@@ -54,8 +54,18 @@ matrix:
 #sudo: false
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update        ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then perlbrew init; perlbrew install stable; perlbrew use stable; fi
+  # Install perlbrew the hard way, on OSX
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade; brew list perl || brew install perl ; fi
+  #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade; brew upgrade perl libpng ; fi
+  - if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then \curl -L http://install.perlbrew.pl | bash; fi
+  - if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then source ~/perl5/perlbrew/etc/bashrc; fi
+  - if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then export PATH=$HOME/perl5/perlbrew/bin:$PATH; fi
+  - if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then echo $TRAVIS_PERL_VERSION; fi
+  - if [[ "$TRAVIS_OS_NAME" == 'osx' ]]; then perlbrew install perl-$TRAVIS_PERL_VERSION; perlbrew use perl-$TRAVIS_PERL_VERSION; perlbrew install-cpanm; fi
+  #
+  # Install local::lib
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -L http://cpanmin.us | perl - --notest --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib); fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -L http://cpanmin.us | perl - --notest App::cpanminus; fi
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
   - build-perl
