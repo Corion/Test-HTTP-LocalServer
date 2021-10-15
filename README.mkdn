@@ -206,4 +206,4 @@ are also very welcome !
 
 # SEE ALSO
 
-[WWW::Mechanize](https://metacpan.org/pod/WWW::Mechanize),[WWW::Mechanize::Shell](https://metacpan.org/pod/WWW::Mechanize::Shell),[WWW::Mechanize::Firefox](https://metacpan.org/pod/WWW::Mechanize::Firefox)
+[WWW::Mechanize](https://metacpan.org/pod/WWW%3A%3AMechanize),[WWW::Mechanize::Shell](https://metacpan.org/pod/WWW%3A%3AMechanize%3A%3AShell),[WWW::Mechanize::Firefox](https://metacpan.org/pod/WWW%3A%3AMechanize%3A%3AFirefox)
