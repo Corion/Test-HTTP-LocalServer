@@ -9,7 +9,9 @@ Test::HTTP::LocalServer - spawn a local HTTP server for testing
 # SYNOPSIS
 
     use HTTP::Tiny;
-    my $server = Test::HTTP::LocalServer->spawn;
+    my $server = Test::HTTP::LocalServer->spawn(
+        request_pause => 1, # wait one second before accepting the next request
+    );
 
     my $res = HTTP::Tiny->new->get( $server->url );
     print $res->{content};
@@ -45,6 +47,16 @@ real exit code and not the chlid exit code.
 Valid arguments are :
 
 - `html =>` scalar containing the page to be served
+
+    If this is not specified, an informative default page will be used.
+
+- `request_pause =>` number of seconds to sleep before accepting the next
+request
+
+    If your system is slow or needs to wait some time before a socket connection
+    is ready again, use this parameter to make the server wait a bit before
+    handling the next connection.
+
 - `file =>` filename containing the page to be served
 - `debug => 1` to make the spawned server output debug information
 - `eval =>` string that will get evaluated per request in the server
