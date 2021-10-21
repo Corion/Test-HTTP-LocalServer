@@ -12,7 +12,7 @@ use Time::HiRes qw ( time sleep );
 use HTTP::Tiny;
 use HTTP::Daemon 6.05; # Our log server needs this, but we load it here to find its version
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 
 =head1 NAME
 

@@ -1,3 +1,8 @@
+0.72 2021-10-21
+    * Introduce the "request_pause" option to adjust the pause between requests.
+      Depending on the UA under test, the default of 1 second may slow down
+      testing too much, or may be necessary.
+
 0.71 2020-01-10
     * Require IO::Socket::IP explicitly, for better IPv6 support
       (CPAN testers failure at
