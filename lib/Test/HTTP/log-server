@@ -7,14 +7,14 @@ use HTTP::Request::AsCGI;
 use Getopt::Long;
 use Socket();
 use Time::HiRes 'sleep';
-our $VERSION = '0.71';
+our $VERSION = '0.73';
 
 $|++;
 
 GetOptions(
     'e=s' => \my $expression,
     'f=s' => \my $url_filename,
-    's=i' => \my $request_pause,
+    's=s' => \my $request_pause,
 );
 
 if( ! defined $request_pause ) {
