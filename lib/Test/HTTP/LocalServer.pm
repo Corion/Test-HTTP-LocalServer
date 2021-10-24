@@ -161,7 +161,7 @@ sub spawn_child { my ( $self, @cmd ) = @_;
 sub spawn {
   my ($class,%args) = @_;
 
-  $args{ request_pause } //= 0;
+  $args{ request_pause } ||= 0;
 
   my $self = { %args };
   bless $self,$class;
