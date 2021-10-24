@@ -7,7 +7,7 @@ use HTTP::Request::AsCGI;
 use Getopt::Long;
 use Socket();
 use Time::HiRes 'sleep';
-our $VERSION = '0.73';
+our $VERSION = '0.74';
 
 $|++;
 
